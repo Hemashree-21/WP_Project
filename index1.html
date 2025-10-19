@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Coffee Website</title>  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <!-- Correct CSS link -->
     <link rel="stylesheet" href="style.css"> 
 </head> 
 <body> 
     <header> 
         <nav class="navbar">
-            <a href="#" class="nav-logo"> 
+            <a href="#" class="nav-logo"> <hr>
                 <h2 class="logo-text">☕ CAFETERIA</h2>
+<hr>
             </a> 
             <!-- Removed the extra colon -->
             <ul class="nav-menu">
+                <button id="menu-close-button" class="fas fa-times"></button>
                 <li class="nav-item"> 
                     <a href="#" class="nav-link">Home</a> 
                 </li>
@@ -34,7 +37,48 @@
                     <a href="#" class="nav-link">Contact</a> 
                 </li>
             </ul>  
+            <button id="menu-open-button" class="fas fa-bars"></button>
         </nav> 
     </header>
+    <main>
+<!-- Hero section -->
+<section class="hero-section"> 
+    <div class="section-content"> 
+        <div class="hero-details"> 
+            <h2 class="title">Best Coffee</h2>
+<h3 class="subtitle">Make your day great with our special coffee!</h3>
+<p class="description">Welcome to our coffee paradise, where every bean tells a story and every cup sparks joy.</p>
+<div class="buttons">
+<a href="#" class="button order-now">Order Now</a> 
+<a href="#" class="button contact-us">Contact Us</a>
+</div>
+</div>
+<div class="hero-image-wrapper":>
+<img src="deekshaascoffee.png" alt="My image" class="hero-image">
+</div> I
+</div> 
+</section> 
+<section class="about-section">
+    <div class="section-content">
+        <div class="about-image-wrapper">
+            <img src="about.png" alt="About"
+            class="about-image">
+        </div>
+        <div class="about-details">
+        <h2 class="section-title">About Us</h2>
+            <p class="text">About Us
+At our cafe, we offer an extensive variety of coffees to suit every taste. Whether you prefer traditional brews or unique creations, you can customize your drink exactly the way you like it—with options like almond milk, goat milk, and sugar-free choices. Every cup is crafted to perfection and is affordable, ensuring a delightful experience for everyone. We also allow pets here . You can bring your furry friends and can have delightful experience. U can also get pup cup for your pets!
+We also bring the cafe experience to your home with our homemade coffee packs, including whole grains, so you can enjoy fresh filter coffee anytime. And the PUPCUPS are free. <br>
+<b>“Your Coffee, Your Way, Every Day"</b></p>
+<div class ="social-link-list">
+    <a href="#" class="social-link"><i class="fa-brands fa-facebook"></i></a>
+     <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#" class="social-link"><i class="fa-brands fa-x-twitter"></i></a>
+</div>
+        </div>
+    </div>
+</section>
+</main>
+<script src="script.js"></script>
 </body>
 </html>
