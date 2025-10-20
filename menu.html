@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu - Cafeteria</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* Navbar */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #ffe4e1; /* pink background */
+    position: relative;
+}
+
+.nav-logo {
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #f08;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 15px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-menu li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.nav-menu li a:hover {
+    color: #f08;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #f08;
+}
+
+/* Mobile Menu */
+body.show-mobile-menu nav ul.nav-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background: #ffe4e1;
+    flex-direction: column;
+    padding-top: 60px;
+    gap: 20px;
+    z-index: 100;
+    display: flex !important;
+}
+
+body.show-mobile-menu nav::before {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.2);
+    z-index: 50;
+}
+
+#menu-close-button {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 200px; /* inside the mobile menu */
+    font-size: 32px;
+    cursor: pointer;
+    color: #f08;
+}
+
+/* Menu Section */
+.menu-section {
+    padding: 50px 20px;
+    background: #ffe4e1;
+}
+
+.menu-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #f08; 
+    text-transform: uppercase;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.menu-item {
+    background: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.menu-item img {
+    max-width: 150px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.add-to-cart {
+    padding: 8px 15px;
+    margin-top: 10px;
+    cursor:pointer;
+    background:#f08; 
+    color:#fff;
+    border:none;
+    border-radius:5px;
+}
+
+.toggle-menu-link {
+    cursor:pointer;
+    color: #f08; 
+    text-decoration: underline;
+    margin-top:20px;
+    display:inline-block;
+    text-align: center;
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) {
+    .menu-toggle {
+        display: block;
+    }
+    .nav-menu {
+        display: none;
+    }
+    .menu-item img {
+        max-width: 120px;
+    }
+    .menu-grid {
+        gap: 15px;
+    }
+}
+</style>
+<script>
+function addToCart(name, price, img) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const index = cart.findIndex(item => item.name === name);
+    if (index > -1) {
+        cart[index].quantity += 1;
+    } else {
+        cart.push({name, price, img, quantity:1});
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(name + " added to cart!");
+}
+
+function showPetMenu() {
+    document.getElementById('human-menu-section').style.display = 'none';
+    document.getElementById('pet-menu-section').style.display = 'block';
+}
+
+function showHumanMenu() {
+    document.getElementById('human-menu-section').style.display = 'block';
+    document.getElementById('pet-menu-section').style.display = 'none';
+}
+
+/* Mobile menu toggle with close icon */
+document.addEventListener("DOMContentLoaded", () => {
+    const menuOpen = document.getElementById('menu-open-button');
+    const menuClose = document.getElementById('menu-close-button');
+
+    menuOpen.addEventListener('click', () => {
+        document.body.classList.add('show-mobile-menu');
+        menuClose.style.display = 'block';
+    });
+
+    menuClose.addEventListener('click', () => {
+        document.body.classList.remove('show-mobile-menu');
+        menuClose.style.display = 'none';
+    });
+});
+</script>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index.html" class="nav-logo">☕ CAFETERIA</a>
+        <span id="menu-open-button" class="menu-toggle">☰</span>
+        <span id="menu-close-button">×</span>
+        <ul class="nav-menu">
+            <li><a href="home1.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="review.html">Review</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="blog.html">Blog</a></li>
+        </ul>
+        <a href="cart.html">🛒 View Cart</a>
+    </nav>
+</header>
+
+<main>
+<br><br><br>
+<section class="menu-section" id="human-menu-section">
+    <h2>Menu Section:</h2>
+    <div class="menu-grid">
+        <div class="menu-item">
+            <img src="C:\Users\ashri\OneDrive\Desktop\wp\coffee1.jpg" alt="Morning Bliss">
+            <h3>Morning Bliss</h3>
+            <p>Classic cappuccino with a frothy heart.</p>
+            <p>₹150</p>
+            <button class="add-to-cart" onclick="addToCart('Morning Bliss',150)">🛒 Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="C:\Users\ashri\OneDrive\Desktop\wp\coffee2.jpg" alt="Almond Aura">
+            <h3>Almond Aura</h3>
+            <p>Almond milk latte with a hint of vanilla.</p>
+            <p>₹120</p>
+            <button class="add-to-cart" onclick="addToCart('Almond Aura',120)">🛒 Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="C:\Users\ashri\OneDrive\Desktop\wp\coffee3.jpg" alt="Mocha Mystique">
+            <h3>Mocha Mystique</h3>
+            <p>Rich mocha topped with chocolate shavings.</p>
+            <p>₹250</p>
+            <button class="add-to-cart" onclick="addToCart('Mocha Mystique',250)">🛒 Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="C:\Users\ashri\OneDrive\Desktop\wp\coffee4.jpg" alt="Golden Goat">
+            <h3>Golden Goat</h3>
+            <p>Goat milk café latte, smooth and creamy with a pinch of cinnamon on top.</p>
+            <p>₹170</p>
+            <button class="add-to-cart" onclick="addToCart('Golden Goat',170)">🛒 Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="C:\Users\ashri\OneDrive\Desktop\wp\coffee5.jpg "alt="Sugar-Free Serenity">
+            <h3>Sugar-Free Serenity</h3>
+            <p>Sugar-free caramel macchiato</p>
+            <p>₹200</p>
+            <button class="add-to-cart" onclick="addToCart('Sugar-Free Serenity',200)">🛒 Add to Cart</button>
+        </div>
+    </div>
+    <div>
+        <span class="toggle-menu-link" onclick="showPetMenu()">Furry-Friendly Menu 🐾</span>
+    </div>
+</section>
+
+<section class="menu-section" id="pet-menu-section" style="display:none;">
+    <h2>Pet-Friendly Menu</h2>
+    <div class="menu-grid">
+        <div class="menu-item">
+            <img src="C:\Users\ashri\OneDrive\Desktop\wp\pup1.jpg" alt="pup1.jpg">
+            <h3>Pawffee (Dog & Cat Latte)
+</h3>
+            <p>Ingredients: Warm oat milk or goat milk (safe for small amounts), tiny sprinkle of turmeric or cinnamon (optional).
+
+</p>
+            <p>₹80</p>
+            <button class="add-to-cart" onclick="addToCart('Pawffee (Dog & Cat Latte)',80,'C:\Users\ashri\OneDrive\Desktop\wp\pup1.jpg')">🛒 Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="C:\Users\ashri\OneDrive\Desktop\wp\pup2.jpg" alt="pup2.jpg">
+            <h3>Berry Woof (Fruit Smoothie)
+</h3>
+            <p>Ingredients: Banana, blueberries, and plain yogurt.</p>
+            <p>₹160</p>
+            <button class="add-to-cart" onclick="addToCart('Berry Woof (Fruit Smoothie)',160,'C:\Users\ashri\OneDrive\Desktop\wp\pup2.jpg')">🛒 Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="C:\Users\ashri\OneDrive\Desktop\wp\pup3.jpg" alt="pup3.jpg">
+            <h3> Veggie Tail (Veggie Smoothie/Drink)
+</h3>
+            <p>Ingredients: Carrot, pumpkin, and apple juice blend. Safe and tasty for both pups and cats.
+</p>
+            <p>₹150</p>
+            <button class="add-to-cart" onclick="addToCart('Veggie Tail (Veggie Smoothie/Drink)',150,'C:\Users\ashri\OneDrive\Desktop\wp\pup3.jpg')">🛒 Add to Cart</button>
+        </div>
+    </div>
+    <div>
+        <span class="toggle-menu-link" onclick="showHumanMenu()">Go Back to Menu ☕</span>
+    </div>
+</section>
+
+</main>
+</body>
+</html>

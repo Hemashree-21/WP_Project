@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart - Cafeteria</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.cart-item { display:flex; align-items:center; gap:15px; margin-bottom:15px; }
+.cart-item img { width:80px; border-radius:5px; }
+.cart-details { flex:1; display:flex; flex-direction:column; }
+.cart-details span.name-price { display:flex; justify-content:space-between; align-items:center; font-weight:bold; margin-bottom:8px; }
+.quantity { display:flex; gap:10px; align-items:center; }
+.quantity button { padding:4px 8px; background:#f08; color:#fff; border:none; border-radius:5px; cursor:pointer; }
+#place-order { margin-top:20px; padding:10px 20px; background:#f08; color:#fff; border:none; border-radius:5px; cursor:pointer; }
+#order-confirm { color:green; margin-top:15px; display:none; font-weight:bold; }
+#order-error { color:red; margin-top:15px; display:none; font-weight:bold; }
+
+/* Responsive adjustments */
+@media screen and (max-width: 600px) {
+    .cart-item { flex-direction: column; align-items:flex-start; }
+    .cart-details span.name-price { flex-direction: column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="index.html">☕ CAFETERIA</a> | 
+        <a href="menu.html">Back to Menu</a>
+    </nav>
+</header>
+
+<main>
+<section>
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <h3 id="total-price"></h3>
+    <button id="place-order">Place Order</button>
+    <p id="order-confirm">✅ Your order has been placed successfully!</p>
+    <p id="order-error">⚠ No items in the cart! Cannot place an order.</p>
+</section>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function renderCart(){
+    const container = document.getElementById('cart-items');
+    const totalEl = document.getElementById('total-price');
+    container.innerHTML = '';
+    let total = 0;
+
+    if(cart.length === 0){
+        container.innerHTML = '<p>No items in the cart.</p>';
+        totalEl.innerText = '';
+        return;
+    }
+
+    cart.forEach((item, index) => {
+    total += item.price * item.quantity;
+
+    // ✅ Fallback image in case item.img is missing
+    let imgPath = item.img || 'wp/placeholder.jpg';
+
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+        <img src="${imgPath}" alt="${item.name}">
+        <div class="cart-details">
+            <span class="name-price">
+                <span>${item.name}</span>
+                <span>₹${item.price}</span>
+            </span>
+            <div class="quantity">
+                <button onclick="changeQty(${index},-1)">-</button>
+                <span>${item.quantity}</span>
+                <button onclick="changeQty(${index},1)">+</button>
+            </div>
+        </div>
+    `;
+    container.appendChild(div);
+});
+
+    totalEl.innerText = "Total: ₹" + total;
+}
+
+function changeQty(index, delta){
+    cart[index].quantity += delta;
+    if(cart[index].quantity <= 0) cart.splice(index,1);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+}
+
+document.getElementById('place-order').addEventListener('click', ()=>{
+    const orderConfirm = document.getElementById('order-confirm');
+    const orderError = document.getElementById('order-error');
+
+    if(cart.length === 0){
+        orderConfirm.style.display = 'none';
+        orderError.style.display = 'block';
+        return;
+    }
+
+    cart = [];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+    orderConfirm.style.display = 'block';
+    orderError.style.display = 'none';
+});
+
+renderCart();
+</script>
+</main>
+</body>
+</html>
